@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const animeSchema = require("../models/animeModel");
-const verifyToken = require("./validate_token");
+const verifyToken = require("../routes/validate_token");
 
 
 // Crear nuevo anime
-router.post("/animes", (req, res) => {
+router.post("/animes", verifyToken, (req, res) => {
     const anime = new animeSchema(req.body);
     anime
         .save()
