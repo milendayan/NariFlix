@@ -6,6 +6,7 @@ const verifyToken = require("../routes/validate_token");
 
 // Crear nuevo anime
 router.post("/animes", verifyToken, (req, res) => {
+
     const anime = new animeSchema(req.body);
     anime
         .save()
@@ -22,7 +23,7 @@ router.get("/animes", verifyToken, (req, res) => {
 });
 
 // Obtener un anime por ID
-router.get("/animes/:id", (req, res) => {
+router.get("/animes/:id", verifyToken, (req, res) => {
     const { id } = req.params;
     animeSchema
         .findById(id)
@@ -31,7 +32,7 @@ router.get("/animes/:id", (req, res) => {
 });
 
 // Actualizar anime por ID
-router.put("/animes/:id", (req, res) => {
+router.put("/animes/:id", verifyToken, (req, res) => {
     const { id } = req.params;
     animeSchema
         .updateOne({ _id: id }, { $set: req.body })
@@ -40,7 +41,7 @@ router.put("/animes/:id", (req, res) => {
 });
 
 // Eliminar anime por ID
-router.delete("/animes/:id", (req, res) => {
+router.delete("/animes/:id", verifyToken, (req, res) => {
     const { id } = req.params;
     animeSchema
         .deleteOne({ _id: id })
